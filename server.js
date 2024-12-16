@@ -23,8 +23,6 @@ app.use('/Product', productRoute)
 app.use('/Category',productRoute)
 app.use('/Trends',productRoute)
 app.use('/Users',userRoute)
-app.use('/Login',userRoute)
-app.use('/Ban',userRoute)
 
 
 app.listen(PORT, ()=>{
