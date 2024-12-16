@@ -59,8 +59,6 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({ email })
 
-        if (!user.bannedUser) {
-
             if (user && (await bcrypt.compare(password, user.password))) {
                 const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "1hr" })
 
@@ -68,6 +66,7 @@ const loginUser = async (req, res) => {
                 res.cookie("token", token, {
                     httpOnly: true,
                     secure: true,
+                     sameSite: 'None',
                     maxAge: 1000 * 60 * 60,
                 })
                 res.setHeader("Authorization", token)
@@ -79,12 +78,7 @@ const loginUser = async (req, res) => {
             }else {
                 res.status(401).send("Invalid email or password")
             }
-
-        }
         
-        else{
-            res.status(403).json({message:"user has been banned!"})
-        }
     }
     catch (error) {
         // Send the actual error message received from the catch block
