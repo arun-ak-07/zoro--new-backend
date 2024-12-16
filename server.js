@@ -14,22 +14,7 @@ const PORT = 5000
 app.use(express.json())
 
 
-const allowedOrigins = [
-    'https://zoro-new-frontend.vercel.app',
-    'http://localhost:3000'
-  ];
-  
-  app.use(cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],    
-    credentials: true 
-  }));
+app.use(cors())
 app.use(cookieParser())
 
 connectDB()
